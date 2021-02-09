@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>BoolFlix</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div id="BoolFlix" class="container-app">
+    <!-- input and button -->
+    <div class="user-research">
+      <input type="text" v-model="userInputSearch"
+      placeholder="Cerca il tuo film" name="" value="">
+
+      <button type="button" @click="researchByInput"name="button">SEARCH</button>
+
+    </div>
+
+    <!-- results user research -->
+    <div class="search-results">
+      <div class="box-films" v-for="elem in allFims">
+      <ul>
+        <li>Title {{elem.title}}</li>
+        <li>Original Title {{elem.original_title}}</li>
+        <li>Lang {{elem.original_language}}</li>
+        <li>Vote {{elem.vote_average}}</li>
+      </ul>
+      </div>
+    </div>
+
+  </div>
+
+
+  <script src="js/main.js" charset="utf-8"></script>
+</body>
+</html>
