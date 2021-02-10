@@ -3,8 +3,10 @@
   margin: 0;
   padding: 0;
 }
-.search-results{
-
+.top-page-app{
+  width: 100vw;
+  background: lightgrey;
+  height: 70px;
 }
 .box-films{
   height: 200px;

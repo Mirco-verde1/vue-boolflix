@@ -7,28 +7,38 @@
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+
 </head>
 <body>
 
   <div id="BoolFlix" class="container-app">
-    <!-- input and button -->
-    <div class="user-research">
-      <input type="text" v-model="userInputSearch"
-      placeholder="Cerca il tuo film" name="" value="">
+    <!-- header with input and button -->
+    <header class="top-page-app">
 
-      <button type="button" @click="researchByInput"name="button">SEARCH</button>
+      <div class="user-research">
+        <input type="text" v-model="userInputSearch"
+        placeholder="Cerca il tuo film" name="" value="">
 
-    </div>
+        <button type="button" @click="researchMovieAndRating()"name="button">SEARCH</button>
+      </div>
+
+    </header>
 
     <!-- results user research -->
     <div class="search-results">
-      <div class="box-films" v-for="elem in allFims">
-      <ul>
-        <li>Title {{elem.title}}</li>
-        <li>Original Title {{elem.original_title}}</li>
-        <li>Lang {{elem.original_language}}</li>
-        <li>Vote {{elem.vote_average}}</li>
-      </ul>
+      <div class="box-films" v-for="(elem, index) in allFilms">
+        <ul>
+          <li>Title: {{elem.title}}</li>
+          <li>Original Title: {{elem.original_title}}</li>
+          <li>Lang: {{elem.original_language}}</li>
+          <!-- in base alla votazione del film la stella sarà piena o meno -->
+          <li>
+            <i v-for="item in movieRatingInteger(elem.vote_average)" class="fas fa-star"></i>
+            <i v-for="item in (5 - movieRatingInteger(elem.vote_average))" class="far fa-star"></i>
+          </li>
+
+        </ul>
       </div>
     </div>
 
