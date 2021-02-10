@@ -21,8 +21,10 @@
 }
 .flag-image{
   width: 30px;
-  height: auto;
+  height: 15px;
+  vertical-align: middle;
+  margin: 5px;
 }
 .container-app{
-  display: flex;
+  
 }

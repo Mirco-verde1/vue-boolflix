@@ -20,12 +20,12 @@
         <input type="text" v-model="userInputSearch"
         placeholder="Cerca il tuo film" name="" value="">
 
-        <button type="button" @click="researchMovieAndRating()"name="button">SEARCH</button>
+        <button type="button" @click="researchMovieAndRating();researchTvSeriesAndRating()" name="button">SEARCH</button>
       </div>
 
     </header>
 
-    <!-- results user research -->
+    <!-- results user research, only films results-->
     <div class="search-results">
       <div class="box-films" v-for="(elem, index) in allFilms">
         <ul>
@@ -49,6 +49,10 @@
         </ul>
       </div>
     </div>
+
+  </div>
+  <!-- add tv series to user research -->
+  <div class="" ">
 
   </div>
 
