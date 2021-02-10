@@ -31,7 +31,11 @@
         <ul>
           <li>Title: {{elem.title}}</li>
           <li>Original Title: {{elem.original_title}}</li>
-          <li>Lang: {{elem.original_language}}</li>
+
+          <li v-if="moviesLanguagesList.includes(elem.original_language)">
+            Lang: <img class="flag-image" :src= " './img/' + elem.original_language + '.png' ">
+          </li>
+          <li v-else > Lang: {{elem.original_language}}</li>
           <!-- in base alla votazione del film la stella sarà piena o meno -->
           <li>
             <i v-for="item in movieRatingInteger(elem.vote_average)" class="fas fa-star"></i>

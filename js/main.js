@@ -4,8 +4,8 @@ new Vue({
   data:{
     allFilms:[],
     userInputSearch:'',
-    moviesRating:0
-
+    moviesRating:0,
+    moviesLanguagesList:[],
   },
 
   mounted(){
@@ -21,7 +21,7 @@ new Vue({
         const dataResult = resp.data.results
         self.allFilms = dataResult;
         console.log(self.allFilms) //allFilms sarà il mio contenitore dati
-
+        self.moviesLanguages()
 
       })
 
@@ -30,7 +30,16 @@ new Vue({
     this.moviesRating = parseInt(Math.ceil(element / 2));
     return this.moviesRating;
 
-    }
+  },
+  moviesLanguages:function(){
+    this.allFilms.forEach((item, i) => {
+      if (!this.moviesLanguagesList.includes(item.original_language)) {
+        this.moviesLanguagesList.push(item.original_language)
+      }
+
+    });
+
+  }
 
 
   }

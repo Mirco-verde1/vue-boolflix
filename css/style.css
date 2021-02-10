@@ -19,6 +19,10 @@
 .box-films ul li{
   list-style: none;
 }
+.flag-image{
+  width: 30px;
+  height: auto;
+}
 .container-app{
   display: flex;
 }
