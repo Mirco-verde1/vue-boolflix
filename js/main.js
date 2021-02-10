@@ -5,7 +5,16 @@ new Vue({
     allFilms:[],
     userInputSearch:'',
     moviesRating:0,
-    moviesLanguagesList:[],
+    moviesLanguagesList:[
+      'en',
+      'it',
+      'es',
+    '  ja',
+      'de',
+      'sv',
+      'fr',
+      'no'
+    ],
   },
 
   mounted(){
@@ -21,8 +30,6 @@ new Vue({
         const dataResult = resp.data.results
         self.allFilms = dataResult;
         console.log(self.allFilms) //allFilms sarà il mio contenitore dati
-        self.moviesLanguages()
-
       })
 
     },//successivamente  trasformo il voto di ogni film da decimale ad intero,arrotondato per eccesso
@@ -31,15 +38,6 @@ new Vue({
     return this.moviesRating;
 
   },
-  moviesLanguages:function(){
-    this.allFilms.forEach((item, i) => {
-      if (!this.moviesLanguagesList.includes(item.original_language)) {
-        this.moviesLanguagesList.push(item.original_language)
-      }
-
-    });
-
-  }
 
 
   }
