@@ -8,15 +8,23 @@
   background: lightgrey;
   height: 70px;
 }
-.box-films{
-  height: 200px;
-  width: 200px;
+.search-results{
+  height:50vh;
+  display: flex;
+  overflow-y: hidden;
+}
+.box-series-films{
+  height: 250px;
   border: 1px solid black;
-  float: left;
   margin: 12px;
 }
+.back-img > img{
+  height: 250px;
 
-.box-films ul li{
+}
+
+
+.box-series-films ul li{
   list-style: none;
 }
 .flag-image{
@@ -26,5 +34,5 @@
   margin: 5px;
 }
 .container-app{
-  
+
 }
