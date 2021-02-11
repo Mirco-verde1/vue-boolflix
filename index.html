@@ -30,13 +30,18 @@
     <!-- results user research, only films results-->
     <div class="search-results">
       <div class="box-series-films" v-for="elem in allFilms">
+
+        <span v-if="elem.poster_path != null" class="back-img">
+           <img  :src=" urlImages + elem.poster_path" alt="">   <!--background image-->
+        </span>
+        <span v-else= "element.poster_path == null"> <img src="./img/not-found.png" alt=""> </span>
+
         <ul>
           <li>Title: {{elem.title}}</li>
-          <li v-if="elem.title !== elem.original_title">Original Title: {{elem.original_title}}</li>
-          <li class="back-img"> <img  :src=" 'http://image.tmdb.org/t/p/w500/' + elem.poster_path" alt=""> </li>
+          <li v-if="elem.title !== elem.original_title">Original Title: {{elem.original_title}}</li> <!--title-->
 
           <li v-if="moviesLanguagesList.includes(elem.original_language)">
-            Lang: <img class="flag-image" :src= " './img/' + elem.original_language + '.png' ">
+            Lang: <img class="flag-image" :src= " './img/' + elem.original_language + '.png' "> <!--language flag-->
 
           </li>
           <li v-else>Lang: {{elem.original_language}}</li>
@@ -58,14 +63,17 @@
 
       <div class="box-series-films" v-for="(item, index) in allTvSeries">
 
+        <span v-if="item.poster_path != null" class="back-img">
+           <img  :src=" urlImages + item.poster_path" alt="">   <!--background image-->
+        </span>
+        <span v-else= "item.poster_path == null"> <img src="./img/not-found.png" alt=""> </span>
+
         <ul>
           <li>Title: {{item.name}}</li>
-          <li v-if="item.name !== item.original_name">Original Title: {{item.original_name}}</li>
-              <li class="back-img"> <img  :src=" 'http://image.tmdb.org/t/p/w500/' + item.poster_path" alt=""> </li>
-          <!-- <li :style="{ 'background-image': 'url(+'http://image.tmdb.org/t/p/w200/' + 'item.poster_path')' }"></li> -->
+          <li v-if="item.name !== item.original_name">Original Title: {{item.original_name}}</li> <!--title-->
 
           <li v-if="moviesLanguagesList.includes(item.original_language)">
-            Lang: <img class="flag-image" :src= " './img/' + item.original_language + '.png' ">
+            Lang: <img class="flag-image" :src= " './img/' + item.original_language + '.png' ">  <!--language flag-->
 
           </li>
           <li v-else>Lang: {{item.original_language}}</li>

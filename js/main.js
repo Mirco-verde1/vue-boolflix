@@ -6,6 +6,7 @@ new Vue({
     allTvSeries:[],
     userInputSearch:'',
     moviesRating:0,
+    urlImages:'http://image.tmdb.org/t/p/w500/',
     moviesLanguagesList:[
       'en',
       'it',
