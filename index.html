@@ -15,18 +15,25 @@
   <div id="BoolFlix">
     <!-- header with input and button -->
     <header class="top-page-app">
+      <div class="logo">
+        <img src="./img/boolflix.png" alt="">
+      </div>
 
       <div class="user-research">
         <input type="text" v-model="userInputSearch"
         placeholder="Cerca il tuo film o la tua serie" name="" value="">
 
-        <button type="button" @click="researchMovie();researchTvSeries()" name="button">SEARCH</button>
+        <button type="button" @click="researchMovie();researchTvSeries()">SEARCH</button>
       </div>
 
     </header>
 
     <!-- results user research, only films results-->
-    <div class="search-results" id="#style-1">
+    <div class="search-results">
+      <div v-if="allFilms.length != 0" class="title-films-row">
+        <h1>BOOLFLIX FILMS</h1>
+      </div>
+
       <div class="box-series-films" v-for="elem in allFilms">
 
         <!-- se l'immagine di background non è presente viene stampata immagine di default-->
@@ -62,8 +69,11 @@
         <!-- end films part -->
 
         <!-- add tv series to user research -->
-        <div class="search-results" id="#style-1">
+        <div class="search-results">
 
+          <div v-if="allTvSeries.length != 0" class="title-series-row">
+            <h1>BOOLFLIX SERIES</h1>
+          </div>
           <div class="box-series-films" v-for="(item, index) in allTvSeries">
 
             <!-- se l'immagine di background non è presente viene stampata immagine di default-->
