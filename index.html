@@ -20,10 +20,10 @@
       </div>
 
       <div class="user-research">
-        <input type="text" v-model="userInputSearch" @keyup.enter="researchMovie();researchTvSeries()"
+        <input type="text" v-model="userInputSearch" @keyup.enter="researchAllElements()"
         placeholder="Cerca il tuo film o la tua serie" name="" value="">
 
-        <button type="button" @click="researchMovie();researchTvSeries()">SEARCH</button>
+        <button type="button" @click="researchAllElements()">SEARCH</button>
       </div>
 
     </header>

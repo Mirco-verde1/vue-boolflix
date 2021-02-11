@@ -15,26 +15,26 @@ body::-webkit-scrollbar {
 }
 
 body::-webkit-scrollbar-track {
-  background: grey;
+  background: #303030;
 }
 
 body::-webkit-scrollbar-thumb {
   background-color: black;
   border-radius: 20px;
-  border: 3px grey;
+  border: 2px #303030;
 }
 .search-results::-webkit-scrollbar {
   width: 12px;
 }
 
 .search-results::-webkit-scrollbar-track {
-  background: grey;
+  background: #303030;
 }
 
 .search-results::-webkit-scrollbar-thumb {
-  background-color: black;
+  background-color: #141414;
   border-radius: 20px;
-  border: 3px grey;
+  border: 2px #303030;
 }
 
 /* video in background prima della ricerca */
@@ -52,6 +52,7 @@ body::-webkit-scrollbar-thumb {
   justify-content: space-between;
   align-items: center;
   background: black;
+  box-shadow: 10px 10px 5px rgb(232,232,232);
 }
 .top-page-app img{
 width: 210px;
