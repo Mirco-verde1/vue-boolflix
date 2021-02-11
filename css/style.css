@@ -15,7 +15,7 @@ body::-webkit-scrollbar {
 }
 
 body::-webkit-scrollbar-track {
-  background: #303030;
+  background: #000;
 }
 
 body::-webkit-scrollbar-thumb {
@@ -28,7 +28,7 @@ body::-webkit-scrollbar-thumb {
 }
 
 .search-results::-webkit-scrollbar-track {
-  background: #303030;
+  background:#000;
 }
 
 .search-results::-webkit-scrollbar-thumb {
@@ -55,8 +55,24 @@ body::-webkit-scrollbar-thumb {
   box-shadow: 10px 10px 5px rgb(232,232,232);
 }
 .top-page-app img{
-width: 210px;
+width: 185px;
 padding-top: 9px;
+}
+.logo{
+  color: white;
+      width: 58%;
+      display: flex;
+      align-items: center;
+}
+.logo ul li{
+  list-style: none;
+  display: inline-flex;
+  padding-right: 13px;
+  padding-left: 30px;
+  cursor: pointer;
+}
+.logo ul li:hover{
+  color:rgb(160,160,160);
 }
 .user-research button{
   margin-right: 24px;
