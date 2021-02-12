@@ -7,6 +7,13 @@ new Vue({
     userInputSearch:'',
     moviesRating:0,
     urlImages:'http://image.tmdb.org/t/p/w500/',
+    moviesCast:[],
+    actorsNames:[],
+    imgNotFound:'./img/not-found',
+    showCast:{
+      show:false,
+      index:true
+    },
     moviesLangList:[
       'en',
       'it',
@@ -22,8 +29,10 @@ new Vue({
 
     // funzione che racchiude tutti i metodi di ricerca----------------------------------->>>
     researchAllElements:function(){
+
       this.researchMovie();
       this.researchTvSeries();
+
     },
 
     //dopo aver effettuato la mia richiesta con axos,salvo i dati---------------------------------->
@@ -38,6 +47,9 @@ new Vue({
       })
       .then((resp) => {
         self.allFilms = resp.data.results
+        self.allFilms.forEach((item, i) => {
+        });
+
       })
     },
 
@@ -57,13 +69,51 @@ new Vue({
           language: 'it-IT',
         },
       })
-      
+
       .then((resp) =>{
         self.allTvSeries = resp.data.results
-
       })
     },
 
+    // ricerca delle informazioni per il cast----------------------------------------->>
+    castResearch:function(movieId,index){
+      this.moviesCast = [];
+
+      this.actorsNames=[];
+
+      const self = this;
+      return axios.get('https://api.themoviedb.org/3/movie/'
+      + movieId +
+      '/credits?api_key=423a9bf9c8fcbaa0c7d6d90fe0bffe70')
+
+      .then((resp) =>{
+        let results = resp.data.cast
+        results.forEach((item, i) => {
+
+          if (!self.moviesCast.includes(item.original_name)) {
+            self.moviesCast.push(item.original_name)
+
+          }
+        });
+        let act=[];
+        for (var i = 0; i < 5; i++) {
+          act.push(self.moviesCast[i]);
+
+        }
+        self.actorsNames = act;
+
+        return self.actorsNames;
+
+      })
+
+    },
+
+    showingCast:function(index){
+      this.showCast.show = !this.showCast.show;
+      this.showCast.index = index;
+      console.log(this.showCast.show);
+      console.log(this.showCast.index);
+    }
 
   }
 
