@@ -57,7 +57,7 @@
               'url('+ imgNotFound +'.png' +')'}">IMAGE NOT FOUND</div>
 
               <!-- informazioni su films e series -->
-              <ul class="movies-info">
+              <ul class="movies-info"  @mouseleave="castOff()">
                 <li>Title: {{elem.title}}</li>
                 <li v-if="elem.title !== elem.original_title">
                   Original Title: {{elem.original_title}}</li> <!--title-->
@@ -75,14 +75,13 @@
                     <i v-for="item in movieRatingInteger(elem.vote_average)" class="fas fa-star"></i>
                     <i v-for="item in (5 - movieRatingInteger(elem.vote_average))" class="far fa-star"></i>
                   </li>
-                  <div >
-                    <span @click="castResearch(elem.id);showingCast(idx)">CAST: </span>
-                      <span v-for="name in actorsNames"
-                      v-if="showCast.show && showCast.index === idx">{{name}}</span>
 
+                  <!-- parte dedicata al mostrare o meno il cast dei film -->
 
+                  <div class="box-cast " @click="castFilm(elem.id);showingCast(idx)">CLICK FOR CAST</div>
+                  <span class="cast" v-for="name in actorsNames"
+                  v-if="showCast.show && showCast.index == idx">{{name}} <br> </span>
 
-                  </div>
                 </ul>
               </div>
             </div>
@@ -107,7 +106,7 @@
                 :style="{ backgroundImage: 'url('+ imgNotFound +'.png' +')'}">IMAGINE NOT FOUND</div>
 
                 <!-- informazioni su films e series -->
-                <ul class="movies-info">
+                <ul class="movies-info" @mouseleave="castOff()">
                   <li>Title: {{item.name}}</li>
                   <li v-if="item.name !== item.original_name">Original Title: {{item.original_name}}</li> <!--title-->
 
@@ -123,7 +122,15 @@
                     <i v-for="numb in movieRatingInteger(item.vote_average)" class="fas fa-star"></i>
                     <i v-for="numb in (5 - movieRatingInteger(item.vote_average))" class="far fa-star"></i>
                   </li>
+
+                  <!-- parte dedicata al mostrare o meno il casting della serie -->
+
+                  <div class="box-cast" @click="castSeries(item.id);showingCast(index)">CLICK FOR CAST</div>
+                  <span class="cast" v-for="name in actorsSeriesNames"
+                    v-if="showCast.show && showCast.index === index">{{name }} <br> </span>
+
                 </ul>
+
               </div>
             </div>
             <!-- end tv series -->

@@ -9,6 +9,8 @@ new Vue({
     urlImages:'http://image.tmdb.org/t/p/w500/',
     moviesCast:[],
     actorsNames:[],
+    seriesCast:[],
+    actorsSeriesNames:[],
     imgNotFound:'./img/not-found',
     showCast:{
       show:false,
@@ -27,7 +29,7 @@ new Vue({
   },
   methods:{
 
-    // funzione che racchiude tutti i metodi di ricerca----------------------------------->>>
+    // funzione che racchiude tutti i metodi di ricerca------------------------>
     researchAllElements:function(){
 
       this.researchMovie();
@@ -35,7 +37,7 @@ new Vue({
 
     },
 
-    //dopo aver effettuato la mia richiesta con axos,salvo i dati---------------------------------->
+    //dopo aver effettuato la mia richiesta con axos,salvo i dati-------------->
     researchMovie:function(){
       const self = this;
       axios.get('https://api.themoviedb.org/3/search/movie',{
@@ -59,7 +61,7 @@ new Vue({
       return this.moviesRating;
     },
 
-    //chiamata per estrapolare dai dati anche le serie tv---------------------------------------->
+    //chiamata per estrapolare dai dati anche le serie tv---------------------->
     researchTvSeries:function(){
       const self = this;
       axios.get('https://api.themoviedb.org/3/search/tv',{
@@ -75,8 +77,8 @@ new Vue({
       })
     },
 
-    // ricerca delle informazioni per il cast----------------------------------------->>
-    castResearch:function(movieId,index){
+    // ricerca delle informazioni per il cast---------------------------------->
+    castFilm:function(movieId){
       this.moviesCast = [];
 
       this.actorsNames=[];
@@ -108,12 +110,49 @@ new Vue({
 
     },
 
+    // metodo per mostrare solo il cast della serie/film cliccato-------------->
     showingCast:function(index){
       this.showCast.show = !this.showCast.show;
       this.showCast.index = index;
-      console.log(this.showCast.show);
-      console.log(this.showCast.index);
-    }
+    },
+
+    castOff:function(){
+      this.showCast.show = false;
+    },
+
+    // estrapolo dai dati il nome del cast delle serie tv---------------------->
+    castSeries:function(seriesId){
+      this.seriesCast = [];
+
+      this.actorsSeriesNames=[];
+
+      const self = this;
+      return axios.get('https://api.themoviedb.org/3/tv/'
+      + seriesId +
+      '/credits?api_key=423a9bf9c8fcbaa0c7d6d90fe0bffe70')
+
+      .then((resp) =>{
+        let results = resp.data.cast
+        results.forEach((item, i) => {
+
+          if (!self.seriesCast.includes(item.original_name)) {
+            self.seriesCast.push(item.original_name)
+
+          }
+        });
+        let act=[];
+        for (var i = 0; i < 5; i++) {
+          act.push(self.seriesCast[i]);
+
+        }
+        self.actorsSeriesNames = act;
+
+        return self.actorsSeriesNames;
+
+      })
+
+    },
+
 
   }
 
