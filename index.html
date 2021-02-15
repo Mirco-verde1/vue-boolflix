@@ -13,136 +13,163 @@
 <body>
 
   <div id="BoolFlix">
+
     <!-- header with input and button -->
     <header class="top-page-app">
       <div class="logo">
         <img src="./img/boolflix.png" alt="">
         <ul>
           <li @click="backHome()">Home</li>
-          <li>Serie TV</li>
-          <li>Film</li>
-          <li>Nuovi e Popolari</li>
+          <li @click="trendingSeries()">Serie TV</li>
+          <li @click="trendingMovie();genres()">Film</li>
+          <li @click="trendingMovieSeries();genres()">Nuovi e Popolari</li>
           <li>La mia lista</li>
         </ul>
       </div>
 
       <div class="user-research">
+
         <input type="text" v-model="userInputSearch"
-         @keyup.enter="researchAllElements()"
-        placeholder="Cerca il tuo film o la tua serie" name="" value="">
+        @keyup.enter="researchAllElements()"
+        placeholder="Cerca il tuo film o la tua serie">
 
         <button type="button" @click="researchAllElements()">SEARCH</button>
       </div>
 
     </header>
 
-  <!-- video background prima della ricerca -->
+    <!-- video background prima della ricerca -->
     <video
-     v-if="allFilms.length === 0" class="fadeInVideo" autoplay muted loop id="myVideo">
-      <source src="./video/back-video.mp4" type="video/mp4">
-      </video>
+    v-if="allFilms.length === 0 && allTvSeries.length === 0"
+    class="fadeInVideo" autoplay muted loop id="myVideo">
+    <source src="./video/back-video.mp4" type="video/mp4">
+    </video>
 
-      <!-- results user research, only films results-->
-      <div class="search-results">
-        <div v-if="allFilms.length != 0" class="title-films-row fadeInResults">
-          <h1>BOOLFLIX FILMS</h1>
-        </div>
+    <!-- results user research, only films results-->
+    <div class="search-results">
+      <div v-if="allFilms.length != 0" class="title-films-row fadeInResults">
+        <h1>BOOLFLIX FILMS</h1>
+        <!-- <select class="select-genre" name="" v-model="select">
+        <option v-for="genre in moviesGenres">{{genre.name}}</option>
 
-        <div class="box-series-films fadeInResults" v-for="(elem,idx) in allFilms">
+      </select> -->
+    </div>
 
-          <!-- se l'immagine di background non è presente viene stampata immagine di default-->
-          <div class="img-dim back-contain-center" v-if="elem.poster_path"
-          :style="{ backgroundImage:
-            'url('+ urlImages + elem.poster_path + ')'  }"></div>
+    <div class="box-series-films fadeInResults" v-for="(elem,idx) in allFilms">
 
-            <div class="img-dim  back-contain-center" v-else
-            :style="{ backgroundImage:
-              'url('+ imgNotFound +'.png' +')'}">IMAGE NOT FOUND</div>
+      <!-- se l'immagine di background non è presente viene stampata immagine di default-->
+      <div class="img-dim back-contain-center" v-if="elem.poster_path"
+      :style="{ backgroundImage:
+        'url('+ urlImages + elem.poster_path + ')'  }"></div>
 
-              <!-- informazioni su films e series -->
-              <ul class="movies-info"  @mouseleave="castOff()">
-                <li>Title: {{elem.title}}</li>
-                <li v-if="elem.title !== elem.original_title">
-                  Original Title: {{elem.original_title}}</li> <!--title-->
+        <div class="img-dim  back-contain-center" v-else
+        :style="{ backgroundImage:
+          'url('+ imgNotFound +'.png' +')'}">IMAGE NOT FOUND</div>
 
-                  <li v-if="moviesLangList.includes(elem.original_language)">
-                    Lang: <img class="flag-image"
-                    :src= " './img/' + elem.original_language + '.png' "> <!--language flag-->
-                  </li>
-                  <li v-else>Lang: {{elem.original_language}}</li>
-                  <li v-if="elem.overview != ''">Description: {{elem.overview}}</li> <!--movies/series description-->
-                  <li>Description: no overwiew found</li>
+          <!-- informazioni su films e series -->
 
-                  <!-- in base alla votazione del film la stella sarà piena o meno -->
-                  <li>
-                    <i v-for="item in movieRatingInteger(elem.vote_average)" class="fas fa-star"></i>
-                    <i v-for="item in (5 - movieRatingInteger(elem.vote_average))" class="far fa-star"></i>
-                  </li>
+          <!--title-->
+          <ul class="movies-info"  @mouseleave="castOff()">
+            <li>Title: {{elem.title}}</li>
+            <li v-if="elem.title !== elem.original_title">
+              Original Title: {{elem.original_title}}</li>
 
-                  <!-- parte dedicata al mostrare o meno il cast dei film -->
+              <!--language flag-->
+              <li v-if="moviesLangList.includes(elem.original_language)">
+                Lang: <img class="flag-image"
+                :src= " './img/' + elem.original_language + '.png' ">
+              </li>
+              <li v-else>Lang: {{elem.original_language}}</li>
 
-                  <div class="box-cast " @click="castFilm(elem.id);showingCast(idx)">CLICK FOR CAST</div>
-                  <div class ="cast" v-for="name in actorsNames">
-                   <span v-if="showCast.show && showCast.index == idx">{{name}}  </span>
-                </div>
+              <!--movies/series description-->
+              <li v-if="elem.overview != ''">Description: {{elem.overview}}</li>
+              <li v-else>Description: no overwiew found</li>
 
+              <!--movies genres-->
+              <span>Genre: </span>
+              <span v-for="(genre,index) in moviesGenres"
+              v-if="outPutGenres(elem.genre_ids,genre.id)">{{genre.name}}  </span>
 
 
-                </ul>
+              <!-- in base alla votazione del film la stella sarà piena o meno -->
+              <li>
+                <i v-for="item in movieRatingInteger(elem.vote_average)" class="fas fa-star"></i>
+                <i v-for="item in (5 - movieRatingInteger(elem.vote_average))" class="far fa-star"></i>
+              </li>
+
+              <!-- parte dedicata al mostrare o meno il cast dei film -->
+
+              <div class="box-cast " @click="castFilm(elem.id);showingCast(idx)">CLICK FOR CAST</div>
+              <div class ="cast" v-for="name in actorsNames">
+                <span v-if="showCast.show && showCast.index == idx">{{name}}  </span>
               </div>
-            </div>
-            <!-- end films part -->
 
-            <!-- add tv series to user research -->
-            <div class="search-results">
 
-              <div v-if="allTvSeries.length != 0" class="title-series-row fadeInResults">
-                <h1>BOOLFLIX SERIES</h1>
-              </div>
-              <div class="box-series-films fadeInResults" v-for="(item, index) in allTvSeries">
 
-                <!-- se l'immagine di background non è presente viene stampata immagine di default-->
-
-                <div class="img-dim back-contain-center"
-                v-if="item.poster_path"
-                :style="{ backgroundImage: 'url('+ urlImages + item.poster_path + ')' } "></div>
-
-                <div class="img-dim  back-contain-center "
-                v-else
-                :style="{ backgroundImage: 'url('+ imgNotFound +'.png' +')'}">IMAGINE NOT FOUND</div>
-
-                <!-- informazioni su films e series -->
-                <ul class="movies-info" @mouseleave="castOff()">
-                  <li>Title: {{item.name}}</li>
-                  <li v-if="item.name !== item.original_name">Original Title: {{item.original_name}}</li> <!--title-->
-
-                  <li v-if="moviesLangList.includes(item.original_language)">
-                    Lang: <img class="flag-image" :src= " './img/' + item.original_language + '.png' ">  <!--language flag-->
-                  </li>
-                  <li v-else>Lang: {{item.original_language}}</li>
-                  <li v-if="item.overview != ''">Description: {{item.overview}}</li> <!--movies/series description-->
-                  <li>Description: no overwiew found</li>
-
-                  <!-- in base alla votazione del film la stella sarà piena o meno -->
-                  <li>
-                    <i v-for="numb in movieRatingInteger(item.vote_average)" class="fas fa-star"></i>
-                    <i v-for="numb in (5 - movieRatingInteger(item.vote_average))" class="far fa-star"></i>
-                  </li>
-
-                  <!-- parte dedicata al mostrare o meno il casting della serie -->
-
-                  <div class="box-cast" @click="castSeries(item.id);showingCast(index)">CLICK FOR CAST</div>
-                  <span class="cast" v-for="name in actorsSeriesNames"
-                    v-if="showCast.show && showCast.index === index">{{name }} <br> </span>
-
-                </ul>
-
-              </div>
-            </div>
-            <!-- end tv series -->
-
-            <!-- end container app BoolFlix -->
+            </ul>
           </div>
-          <script src="js/main.js" charset="utf-8"></script>
-        </body>
-        </html>
+        </div>
+        <!-- end films part -->
+
+        <!-- add tv series to user research -->
+        <div class="search-results">
+
+          <div v-if="allTvSeries.length != 0" class="title-series-row fadeInResults">
+            <h1>BOOLFLIX SERIES</h1>
+          </div>
+          <div class="box-series-films fadeInResults" v-for="(item, index) in allTvSeries">
+
+            <!-- se l'immagine di background non è presente viene stampata immagine di default-->
+
+            <div class="img-dim back-contain-center"
+            v-if="item.poster_path"
+            :style="{ backgroundImage: 'url('+ urlImages + item.poster_path + ')' } "></div>
+
+            <div class="img-dim  back-contain-center "
+            v-else
+            :style="{ backgroundImage: 'url('+ imgNotFound +'.png' +')'}">IMAGINE NOT FOUND</div>
+
+            <!-- informazioni su films e series -->
+            <ul class="movies-info" @mouseleave="castOff()">
+
+              <!--title-->
+              <li>Title: {{item.name}}</li>
+              <li v-if="item.name !== item.original_name">Original Title: {{item.original_name}}</li>
+
+              <!--language flag-->
+              <li v-if="moviesLangList.includes(item.original_language)">
+                Lang: <img class="flag-image" :src= " './img/' + item.original_language + '.png' ">
+              </li>
+              <li v-else>Lang: {{item.original_language}}</li>
+
+              <!--movies/series description-->
+              <li v-if="item.overview != ''">Description: {{item.overview}}</li>
+              <li>Description: no overwiew found</li>
+
+              <!-- series genres -->
+              <span>Genre: </span>
+              <span v-for="elem in seriesGenres" v-if="outPutGenres(item.genre_ids,elem.id)">  {{elem.name}}  </span>
+
+              <!-- in base alla votazione del film la stella sarà piena o meno -->
+              <li>
+                <i v-for="numb in movieRatingInteger(item.vote_average)" class="fas fa-star"></i>
+                <i v-for="numb in (5 - movieRatingInteger(item.vote_average))" class="far fa-star"></i>
+              </li>
+
+              <!-- parte dedicata al mostrare o meno il casting della serie -->
+
+              <div class="box-cast" @click="castSeries(item.id);showingCast(index)">CLICK FOR CAST</div>
+              <span class="cast" v-for="name in actorsSeriesNames"
+              v-if="showCast.show && showCast.index === index">{{name }} <br> </span>
+
+            </ul>
+
+          </div>
+        </div>
+        <!-- end tv series -->
+
+        <!-- end container app BoolFlix -->
+      </div>
+      <script src="js/main.js" charset="utf-8"></script>
+    </body>
+    </html>

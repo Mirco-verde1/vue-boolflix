@@ -12,7 +12,15 @@ new Vue({
     actorsNames:[],
     seriesCast:[],
     actorsSeriesNames:[],
+    seriesGenres:[],
+    moviesGenres:[],
     imgNotFound:'./img/not-found',
+    urlGenreSeries:'https://api.themoviedb.org/3/genre/tv/list',
+    urlMovies:'https://api.themoviedb.org/3/search/movie',
+    urlSeries:'https://api.themoviedb.org/3/search/tv',
+    trendMovies:'https://api.themoviedb.org/3/trending/movie/week',
+    trendSeries:'https://api.themoviedb.org/3/trending/tv/week',
+    select:'',
     showCast:{
       show:false,
       index:true
@@ -35,7 +43,21 @@ new Vue({
 
       this.researchMovie();
       this.researchTvSeries();
+      this.researchMoviesGenres();
+      this.researchSeriesGenres();
 
+    },
+
+    trendingMovieSeries:function(){
+      this.trendingMovie();
+      this.trendingSeries();
+      this.researchMoviesGenres();
+      this.researchSeriesGenres();
+    },
+
+    genres:function(){
+      this.researchMoviesGenres();
+      this.researchSeriesGenres();
     },
 
     //dopo aver effettuato la mia richiesta con axos,salvo i dati-------------->
@@ -80,9 +102,6 @@ new Vue({
 
     // ricerca delle informazioni per il cast---------------------------------->
     castFilm:function(movieId){
-      this.moviesCast = [];
-
-      this.actorsNames=[];
 
       const self = this;
       return axios.get('https://api.themoviedb.org/3/movie/'
@@ -123,9 +142,6 @@ new Vue({
 
     // estrapolo dai dati il nome del cast delle serie tv---------------------->
     castSeries:function(seriesId){
-      this.seriesCast = [];
-
-      this.actorsSeriesNames=[];
 
       const self = this;
       return axios.get('https://api.themoviedb.org/3/tv/'
@@ -135,12 +151,7 @@ new Vue({
       .then((resp) =>{
         let results = resp.data.cast
         results.forEach((item, i) => {
-
-          if (!self.seriesCast.includes(item.original_name)) {
-            self.seriesCast.push(item.original_name)
-
-          }
-        });
+        })
         let act=[];
         for (var i = 0; i < 5; i++) {
           act.push(self.seriesCast[i]);
@@ -153,13 +164,76 @@ new Vue({
 
     },
 
-      // premendo il tasto 'Home' svuoto la ricerca e torno in video background
-      backHome:function(){
-           this.allFilms=[]
-          this.allTvSeries=[]
-      }
+    // premendo il tasto 'Home' svuoto la ricerca e torno in video background
+    backHome:function(){
+      this.allFilms=[]
+      this.allTvSeries=[]
+    },
+
+    // ricerca dei generi delle serie tv-----------------------------------
+    researchMoviesGenres:function(){
+      const self = this;
+      return axios.get(self.urlGenreSeries,{
+        params:{
+          api_key:self.myApyKey,
+
+        },
+      })
+      .then(function(resp){
+        self.seriesGenres = resp.data.genres;
 
 
+      });
+    },
+    // ricerca dei generi dei films-----------------------------------
+    researchSeriesGenres:function(){
+      const self = this;
+      return axios.get('https://api.themoviedb.org/3/genre/movie/list',{
+        params:{
+          api_key:self.myApyKey,
+
+        },
+      })
+      .then(function(resp){
+        return self.moviesGenres = resp.data.genres;
+
+
+      });
+    },
+    outPutGenres:function(listId,id){
+      return listId.includes(id);
+    },
+
+    // risultati in trend cliccando su film
+    trendingMovie:function(){
+      const self= this;
+      axios.get(self.trendMovies,{
+        params:{
+          api_key:self.myApyKey,
+        },
+      })
+      .then(function(resp){
+        self.allFilms = resp.data.results;
+
+
+      });
+    },
+
+    // risultati in trend cliccando su serieTv
+    trendingSeries:function(){
+      const self = this;
+      axios.get(self.trendSeries,{
+        params:{
+          api_key:self.myApyKey,
+
+        },
+      })
+      .then(function(resp){
+         self.allTvSeries = resp.data.results;
+
+
+      });
+    },
 
   }
 

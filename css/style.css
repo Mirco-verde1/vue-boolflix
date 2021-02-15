@@ -56,11 +56,11 @@ body::-webkit-scrollbar-thumb {
 
 /* fade in video background */
 .fadeInResults {
-  animation: fadeIn ease 5s;
-  -webkit-animation: fadeIn ease 5s;
-  -moz-animation: fadeIn ease 5s;
-  -o-animation: fadeIn ease 5s;
-  -ms-animation: fadeIn ease 5s;
+  animation: fadeIn ease 4s;
+  -webkit-animation: fadeIn ease 4s;
+  -moz-animation: fadeIn ease 4s;
+  -o-animation: fadeIn ease 4s;
+  -ms-animation: fadeIn ease 4s;
 }
 @keyframes fadeIn {
   0% {
@@ -88,16 +88,19 @@ body::-webkit-scrollbar-thumb {
   background: black;
   box-shadow: 10px 10px 5px rgb(232,232,232);
 }
+
 .top-page-app img{
-  width: 185px;
+  width: 152px;
   padding-top: 9px;
 }
+
 .logo{
   color: white;
   width: 58%;
   display: flex;
   align-items: center;
 }
+
 .logo ul li{
   list-style: none;
   display: inline-flex;
@@ -105,9 +108,11 @@ body::-webkit-scrollbar-thumb {
   padding-left: 30px;
   cursor: pointer;
 }
+
 .logo ul li:hover{
   color:rgb(160,160,160);
 }
+
 .user-research button{
   margin-right: 24px;
   height: 25px;
@@ -116,6 +121,7 @@ body::-webkit-scrollbar-thumb {
   cursor: pointer;
   border-radius: 7px;
 }
+
 .user-research input{
   border: none;
   text-align: center;
@@ -125,6 +131,7 @@ body::-webkit-scrollbar-thumb {
   transition: width 2s ;
 
 }
+
 .user-research:hover input{
   width: 419px;
   border: none;
@@ -138,6 +145,11 @@ body::-webkit-scrollbar-thumb {
   display: flex;
   overflow-y: hidden;
   background: #000;
+  height: 50%;
+  width: 100%;
+}
+.no-results{
+  color:red;
 }
 
 /* movies-info comparirà all'hover */
@@ -177,7 +189,7 @@ body::-webkit-scrollbar-thumb {
   /* box in cui stampo a video i risultati */
   .box-series-films{
     border-radius: 5px;
-    margin: 12px;
+    margin: 2px;
     position: relative;
     display: flex;
     cursor: pointer;
@@ -220,12 +232,12 @@ body::-webkit-scrollbar-thumb {
     vertical-align: middle;
     margin: 5px;
   }
- .box-cast{
-  text-align: center;
-  font-size: 19px;
-  padding-bottom: 15px;
-  z-index: 30;
- }
+  .box-cast{
+    text-align: center;
+    font-size: 19px;
+    padding-bottom: 15px;
+    z-index: 30;
+  }
   .cast{
     color:#d9d9d9;
     border-radius: 2px;
