@@ -18,7 +18,7 @@
       <div class="logo">
         <img src="./img/boolflix.png" alt="">
         <ul>
-          <li>Home</li>
+          <li @click="backHome()">Home</li>
           <li>Serie TV</li>
           <li>Film</li>
           <li>Nuovi e Popolari</li>
@@ -27,7 +27,8 @@
       </div>
 
       <div class="user-research">
-        <input type="text" v-model="userInputSearch" @keyup.enter="researchAllElements()"
+        <input type="text" v-model="userInputSearch"
+         @keyup.enter="researchAllElements()"
         placeholder="Cerca il tuo film o la tua serie" name="" value="">
 
         <button type="button" @click="researchAllElements()">SEARCH</button>
@@ -35,17 +36,19 @@
 
     </header>
 
-    <video v-if="allFilms.length === 0" autoplay muted loop id="myVideo">
+  <!-- video background prima della ricerca -->
+    <video
+     v-if="allFilms.length === 0" class="fadeInVideo" autoplay muted loop id="myVideo">
       <source src="./video/back-video.mp4" type="video/mp4">
       </video>
 
       <!-- results user research, only films results-->
       <div class="search-results">
-        <div v-if="allFilms.length != 0" class="title-films-row">
+        <div v-if="allFilms.length != 0" class="title-films-row fadeInResults">
           <h1>BOOLFLIX FILMS</h1>
         </div>
 
-        <div class="box-series-films" v-for="(elem,idx) in allFilms">
+        <div class="box-series-films fadeInResults" v-for="(elem,idx) in allFilms">
 
           <!-- se l'immagine di background non è presente viene stampata immagine di default-->
           <div class="img-dim back-contain-center" v-if="elem.poster_path"
@@ -79,8 +82,11 @@
                   <!-- parte dedicata al mostrare o meno il cast dei film -->
 
                   <div class="box-cast " @click="castFilm(elem.id);showingCast(idx)">CLICK FOR CAST</div>
-                  <span class="cast" v-for="name in actorsNames"
-                  v-if="showCast.show && showCast.index == idx">{{name}} <br> </span>
+                  <div class ="cast" v-for="name in actorsNames">
+                   <span v-if="showCast.show && showCast.index == idx">{{name}}  </span>
+                </div>
+
+
 
                 </ul>
               </div>
@@ -90,10 +96,10 @@
             <!-- add tv series to user research -->
             <div class="search-results">
 
-              <div v-if="allTvSeries.length != 0" class="title-series-row">
+              <div v-if="allTvSeries.length != 0" class="title-series-row fadeInResults">
                 <h1>BOOLFLIX SERIES</h1>
               </div>
-              <div class="box-series-films" v-for="(item, index) in allTvSeries">
+              <div class="box-series-films fadeInResults" v-for="(item, index) in allTvSeries">
 
                 <!-- se l'immagine di background non è presente viene stampata immagine di default-->
 

@@ -37,6 +37,40 @@ body::-webkit-scrollbar-thumb {
   border: 2px #303030;
 }
 
+/* fade in risultati ricerca */
+.fadeInVideo {
+  animation: fadeIn ease 3s;
+  -webkit-animation: fadeIn ease 3s;
+  -moz-animation: fadeIn ease 3s;
+  -o-animation: fadeIn ease 3s;
+  -ms-animation: fadeIn ease 3s;
+}
+@keyframes fadeIn {
+  0% {
+    opacity:0.6;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+/* fade in video background */
+.fadeInResults {
+  animation: fadeIn ease 5s;
+  -webkit-animation: fadeIn ease 5s;
+  -moz-animation: fadeIn ease 5s;
+  -o-animation: fadeIn ease 5s;
+  -ms-animation: fadeIn ease 5s;
+}
+@keyframes fadeIn {
+  0% {
+    opacity:0.2;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
 /* video in background prima della ricerca */
 #myVideo {
   position: fixed;
@@ -112,7 +146,7 @@ body::-webkit-scrollbar-thumb {
   z-index: 10;
   width: 100%;
   height: 100%;
-  font-size: 14px;
+  font-size: 12px;
   opacity: 0;
   padding: 15px;
   transition: opacity 0.4s ;
@@ -142,7 +176,6 @@ body::-webkit-scrollbar-thumb {
 
   /* box in cui stampo a video i risultati */
   .box-series-films{
-    height: 400px;
     border-radius: 5px;
     margin: 12px;
     position: relative;

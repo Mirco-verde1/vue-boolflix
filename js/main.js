@@ -2,6 +2,7 @@ new Vue({
   el:'#BoolFlix',
 
   data:{
+    myApyKey:'423a9bf9c8fcbaa0c7d6d90fe0bffe70',
     allFilms:[],
     allTvSeries:[],
     userInputSearch:'',
@@ -42,7 +43,7 @@ new Vue({
       const self = this;
       axios.get('https://api.themoviedb.org/3/search/movie',{
         params:{
-          api_key:'423a9bf9c8fcbaa0c7d6d90fe0bffe70',
+          api_key:self.myApyKey,
           query: self.userInputSearch,
           language: 'it-IT',
         },
@@ -66,7 +67,7 @@ new Vue({
       const self = this;
       axios.get('https://api.themoviedb.org/3/search/tv',{
         params:{
-          api_key:'423a9bf9c8fcbaa0c7d6d90fe0bffe70',
+          api_key:self.myApyKey,
           query: self.userInputSearch,
           language: 'it-IT',
         },
@@ -86,7 +87,7 @@ new Vue({
       const self = this;
       return axios.get('https://api.themoviedb.org/3/movie/'
       + movieId +
-      '/credits?api_key=423a9bf9c8fcbaa0c7d6d90fe0bffe70')
+      '/credits?api_key='+ self.myApyKey)
 
       .then((resp) =>{
         let results = resp.data.cast
@@ -129,7 +130,7 @@ new Vue({
       const self = this;
       return axios.get('https://api.themoviedb.org/3/tv/'
       + seriesId +
-      '/credits?api_key=423a9bf9c8fcbaa0c7d6d90fe0bffe70')
+      '/credits?api_key='+ self.myApyKey)
 
       .then((resp) =>{
         let results = resp.data.cast
@@ -145,13 +146,19 @@ new Vue({
           act.push(self.seriesCast[i]);
 
         }
-        self.actorsSeriesNames = act;
 
-        return self.actorsSeriesNames;
+        return self.actorsSeriesNames = act;
 
       })
 
     },
+
+      // premendo il tasto 'Home' svuoto la ricerca e torno in video background
+      backHome:function(){
+           this.allFilms=[]
+          this.allTvSeries=[]
+      }
+
 
 
   }
