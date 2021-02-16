@@ -100,8 +100,10 @@ new Vue({
       })
     },
 
-    // ricerca delle informazioni per il cast---------------------------------->
+    // ricerca delle informazioni per il cast dei film------------------------->
     castFilm:function(movieId){
+      this.moviesCast = [];
+      this.actorsNames = [];
 
       const self = this;
       return axios.get('https://api.themoviedb.org/3/movie/'
@@ -141,28 +143,37 @@ new Vue({
     },
 
     // estrapolo dai dati il nome del cast delle serie tv---------------------->
-    castSeries:function(seriesId){
+        castSeries:function(seriesId){
+          this.seriesCast = [];
 
-      const self = this;
-      return axios.get('https://api.themoviedb.org/3/tv/'
-      + seriesId +
-      '/credits?api_key='+ self.myApyKey)
+          this.actorsSeriesNames=[];
 
-      .then((resp) =>{
-        let results = resp.data.cast
-        results.forEach((item, i) => {
-        })
-        let act=[];
-        for (var i = 0; i < 5; i++) {
-          act.push(self.seriesCast[i]);
+          const self = this;
+          return axios.get('https://api.themoviedb.org/3/tv/'
+          + seriesId +
+          '/credits?api_key='+ self.myApyKey)
 
-        }
+          .then((resp) =>{
+            let results = resp.data.cast
+            results.forEach((item, i) => {
 
-        return self.actorsSeriesNames = act;
+              if (!self.seriesCast.includes(item.original_name)) {
+                self.seriesCast.push(item.original_name)
 
-      })
+              }
+            });
+            let act=[];
+            for (var i = 0; i < 5; i++) {
+              act.push(self.seriesCast[i]);
 
-    },
+            }
+            self.actorsSeriesNames = act;
+
+            return self.actorsSeriesNames;
+
+          })
+
+        },
 
     // premendo il tasto 'Home' svuoto la ricerca e torno in video background
     backHome:function(){

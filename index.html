@@ -98,11 +98,10 @@
               </li>
 
               <!-- parte dedicata al mostrare o meno il cast dei film -->
+               <div class="box-cast " @click="castFilm(elem.id);showingCast(idx)">CLICK FOR CAST</div>
+               <span class="cast" v-for="name in actorsNames"
+               v-if="showCast.show && showCast.index === idx">{{name}} <br> </span>
 
-              <div class="box-cast " @click="castFilm(elem.id);showingCast(idx)">CLICK FOR CAST</div>
-              <div class ="cast" v-for="name in actorsNames">
-                <span v-if="showCast.show && showCast.index == idx">{{name}}  </span>
-              </div>
 
 
 
@@ -160,7 +159,7 @@
 
               <div class="box-cast" @click="castSeries(item.id);showingCast(index)">CLICK FOR CAST</div>
               <span class="cast" v-for="name in actorsSeriesNames"
-              v-if="showCast.show && showCast.index === index">{{name }} <br> </span>
+              v-if="showCast.show && showCast.index == index">{{name }} <br> </span>
 
             </ul>
 
