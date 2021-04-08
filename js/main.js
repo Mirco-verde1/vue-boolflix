@@ -119,6 +119,7 @@ new Vue({
 
           }
         });
+        
         let act=[];
         for (var i = 0; i < 5; i++) {
           act.push(self.moviesCast[i]);
